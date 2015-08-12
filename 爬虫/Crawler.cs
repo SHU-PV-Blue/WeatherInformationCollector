@@ -19,7 +19,7 @@ namespace WebCrawler
 			_fileName = fileName;
 		}
 
-		public void Crawl()
+		public bool Crawl()
 		{
 			HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(_link);
 			request.Method = WebRequestMethods.Http.Get;
@@ -30,8 +30,8 @@ namespace WebCrawler
 			}
 			catch (System.Net.WebException)
 			{
-				Console.WriteLine("无法连接到网站" + _link);
-				return;
+				Console.WriteLine("!!!!!!!!!!无法连接到网站" + _link);
+				return false;
 			}
 			System.IO.StreamReader reader = new System.IO.StreamReader(response.GetResponseStream());
 			string data = reader.ReadToEnd();
@@ -41,7 +41,7 @@ namespace WebCrawler
 			output.Write(Encoding.Default.GetBytes(data),0,data.Length);
 			output.Close();
 			Console.WriteLine("成功抓取:" + _link);
-			//return true;
+			return true;
 		}
 	}
 }
