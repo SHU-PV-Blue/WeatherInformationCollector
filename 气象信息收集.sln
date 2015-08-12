@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "爬虫", "爬虫\爬虫.csproj", "{4148866C-5761-4CA4-85DE-A3DAA9944A66}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "提取信息", "提取信息\提取信息.csproj", "{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4148866C-5761-4CA4-85DE-A3DAA9944A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4148866C-5761-4CA4-85DE-A3DAA9944A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4148866C-5761-4CA4-85DE-A3DAA9944A66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
