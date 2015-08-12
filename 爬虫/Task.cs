@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.IO;
+
 namespace WebCrawler
 {
 	class Task
@@ -29,7 +31,13 @@ namespace WebCrawler
 				fileName += "0" + _lon;
 			else
 				fileName += "" + _lon;
-			while (!(new Crawler("https://eosweb.larc.nasa.gov/cgi-bin/sse/grid.cgi?&num=182092&lat=" + _lat + "&hgt=100&submit=Submit&veg=17&sitelev=&email=&p=grid_id&step=2&lon=" + _lon, "data\\" + fileName + ".html")).Crawl())
+			fileName += ".html";
+			if((new FileInfo("data\\" + fileName)).Exists)
+			{
+				Console.WriteLine("已存在文件" + fileName);
+				return;
+			}
+			while (!(new Crawler("https://eosweb.larc.nasa.gov/cgi-bin/sse/grid.cgi?&num=182092&lat=" + _lat + "&hgt=100&submit=Submit&veg=17&sitelev=&email=&p=grid_id&step=2&lon=" + _lon, "data\\" + fileName)).Crawl())
 				;
 			TimeSpan ts = DateTime.Now - dt;
 			Console.WriteLine(ts);

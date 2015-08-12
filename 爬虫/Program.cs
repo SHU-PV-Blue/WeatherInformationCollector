@@ -29,12 +29,12 @@ namespace WebCrawler
 			int lonEnd = 136;
 			int lat = latStart;
 			int lon = lonStart;
-			Thread[] ths = new Thread[100];
+			Thread[] ths = new Thread[10];
 			DateTime dt = DateTime.Now;
 			while(lat <= latEnd)
 			{
 				
-				for(int i = 0; i < 100; ++i)
+				for(int i = 0; i < 10; ++i)
 				{
 					if (ths[i] == null || ths[i].ThreadState == ThreadState.Stopped)
 					{
