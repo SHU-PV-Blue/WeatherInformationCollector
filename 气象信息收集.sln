@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "爬虫", "爬虫\爬虫.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "提取信息", "提取信息\提取信息.csproj", "{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringExtractor", "StringExtractor\StringExtractor.csproj", "{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDC34A2A-78F7-4E29-B00C-11FD9E35A061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
