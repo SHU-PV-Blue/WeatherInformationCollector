@@ -49,7 +49,7 @@ namespace StringExtractor
 				List<int> indexs = FindIndexOf(str, startStr);
 				if (indexs.Count == 0)
 					continue;
-				for (int i = indexs[0]; i < indexs.Count; ++i)
+				for (int i = 0; i < indexs.Count; ++i)
 				{
 					if (i > 0)
 						result.Add(str.Substring(indexs[i - 1] + startStr.Length, indexs[i] - indexs[i - 1] - startStr.Length));
@@ -70,7 +70,7 @@ namespace StringExtractor
 				List<int> indexs = FindIndexOf(str,endStr);
 				if(indexs.Count == 0)
 					continue;
-				for(int i = indexs[0]; i < indexs.Count; ++i)
+				for(int i = 0; i < indexs.Count; ++i)
 				{
 					if(i + 1 < indexs.Count)
 						result.Add(str.Substring(indexs[i] + endStr.Length, indexs[i + 1] - indexs[i] - endStr.Length));
