@@ -8,33 +8,91 @@ namespace StringExtractor
 {
 	class Extractor
 	{
-		string baseStr;
-		public Extractor(string input_str)
+		List<string> baseStrs;
+
+		public Extractor(string inputStr)
 		{
-			baseStr = input_str;
+			if (inputStr == null || inputStr == "")
+				throw new Exception("参数不能为空");
+			baseStrs = new List<string>();
+			baseStrs.Add(inputStr);
 		}
-		public List<int> FindIndexOf(string input_str)
+
+		public Extractor(List<string> inputStrs)
 		{
+			if (inputStrs == null)
+				throw new Exception("参数不能为空");
+			baseStrs = new List<string>(inputStrs);
+		}
+
+		private List<int> FindIndexOf(string mainStr,string subStr)
+		{
+			if (subStr == null || subStr == "")
+				throw new Exception("参数不能为空");
 			List<int> result = new List<int>();
-			string str = baseStr;
-			int start = 0;
-			while(str.Length > 0)
+			int startIndex = 0;
+			while (mainStr.IndexOf(subStr,startIndex) != -1)
 			{
-				int index = str.IndexOf(input_str);
-				if(index != -1)
-				{
-					result.Add(start + index);
-					str = str.Remove(0, index + input_str.Length);
-					start += index + input_str.Length;
-				}
-				else
-					str = str.Remove(0, str.Length);
+				result.Add(mainStr.IndexOf(subStr, startIndex));
+				startIndex = mainStr.IndexOf(subStr, startIndex) + subStr.Length;
 			}
 			return result;
 		}
-		public List<string> FindStringBetween(string startStr, string endStr)
+
+		public Extractor GetBefore(string startStr)
 		{
-			string tempStr = baseStr;
+			if (startStr == null || startStr == "")
+				throw new Exception("参数不能为空");
+			List<string> result = new List<string>();
+			foreach (var str in baseStrs)
+			{
+				List<int> indexs = FindIndexOf(str, startStr);
+				if (indexs.Count == 0)
+					continue;
+				for (int i = indexs[0]; i < indexs.Count; ++i)
+				{
+					if (i > 0)
+						result.Add(str.Substring(indexs[i - 1] + startStr.Length, indexs[i] - indexs[i - 1] - startStr.Length));
+					else
+						result.Add(str.Substring(0, indexs[i] - 0));
+				}
+			}
+			return new Extractor(result);
+		}
+
+		public Extractor GetAfter(string endStr)
+		{
+			if (endStr == null || endStr == "")
+				throw new Exception("参数不能为空");
+			List<string> result = new List<string>();
+			foreach (var str in baseStrs)
+			{
+				List<int> indexs = FindIndexOf(str,endStr);
+				if(indexs.Count == 0)
+					continue;
+				for(int i = indexs[0]; i < indexs.Count; ++i)
+				{
+					if(i + 1 < indexs.Count)
+						result.Add(str.Substring(indexs[i] + endStr.Length, indexs[i + 1] - indexs[i] - endStr.Length));
+					else
+						result.Add(str.Substring(indexs[i] + endStr.Length, str.Length - indexs[i] - endStr.Length));
+				}
+			}
+			return new Extractor(result);
+		}
+
+		public List<string> GetResult()
+		{
+			return new List<string>(baseStrs);
+		}
+
+		public Extractor Clone()
+		{
+			return new Extractor(baseStrs);
+		}
+		/*public List<string> FindStringBetween(string startStr, string endStr)
+		{
+			string tempStr = baseStrs;
 			List<string> result = new List<string>();
 			List<int> startIndex = FindIndexOf(startStr);
 			int count = 0;
@@ -50,6 +108,6 @@ namespace StringExtractor
 				++count;
 			}
 			return result;
-		}
+		}*/
 	}
 }

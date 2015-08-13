@@ -10,6 +10,7 @@ namespace StringExtractor
 	{
 		static void Main(string[] args)
 		{
+			Extractor ex = new Extractor("12");
 		}
 	}
 }
