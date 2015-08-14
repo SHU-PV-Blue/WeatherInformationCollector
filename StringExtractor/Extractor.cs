@@ -81,6 +81,38 @@ namespace StringExtractor
 			return new Extractor(result);
 		}
 
+		public Extractor GetBeforeFirst(string startStr)
+		{
+			if (startStr == null || startStr == "")
+				throw new Exception("参数不能为空");
+			List<string> result = new List<string>();
+			foreach (var str in baseStrs)
+			{
+				List<int> indexs = FindIndexOf(str, startStr);
+				if (indexs.Count == 0)
+					continue;
+				else
+					result.Add(str.Substring(0, indexs[0] - 0));
+			}
+			return new Extractor(result);
+		}
+
+		public Extractor GetAfterFirst(string endStr)
+		{
+			if (endStr == null || endStr == "")
+				throw new Exception("参数不能为空");
+			List<string> result = new List<string>();
+			foreach (var str in baseStrs)
+			{
+				List<int> indexs = FindIndexOf(str, endStr);
+				if (indexs.Count == 0)
+					continue;
+				else
+					result.Add(str.Substring(indexs[0] + endStr.Length, str.Length - indexs[0] - endStr.Length));
+			}
+			return new Extractor(result);
+		}
+
 		public List<string> GetResult()
 		{
 			return new List<string>(baseStrs);
