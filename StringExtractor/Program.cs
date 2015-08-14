@@ -12,7 +12,7 @@ namespace StringExtractor
 	{
 		static void Main(string[] args)
 		{
-			test2();
+			test3();
 		}
 
 		static void test1()
@@ -44,6 +44,40 @@ namespace StringExtractor
 			}
 			Console.WriteLine("count:" + result.Count);
 			Console.Read();
+		}
+
+		static void test3()
+		{
+			Extractor ex = new Extractor((new System.IO.StreamReader("03,073.html")).ReadToEnd());
+			List<string> partResult =
+				ex
+				.GetAfter("<hr><big><b><i>")
+				.GetResult();
+			/*foreach (var str in partResult)
+			{
+				Console.WriteLine("----------------------------------------------------");
+				Console.WriteLine("result:" + str);
+			}*/
+			foreach(var str1 in partResult)
+			{
+				List<string> tableResult = (new Extractor(str1)).GetAfter("<div align=\"center\"><table border=1 summary=\"").GetBefore("\" width=\"95%\">").GetResult();
+				ShowStrings(tableResult);
+			}
+			//Console.WriteLine("count:" + partResult.Count);
+			Console.Read();
+		}
+		static int count = 0;
+		static bool ShowStrings(List<string> strings)
+		{
+			if (strings == null)
+				return false;
+			foreach(var str in strings)
+			{
+				Console.Write(++count + ":");
+				Console.WriteLine("-------------------------------------------------------------------------");
+				Console.WriteLine(str);
+			}
+			return true;
 		}
 	}
 }
