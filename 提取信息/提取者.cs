@@ -42,8 +42,10 @@ namespace 提取信息
 					int lineIndex = 1;
 					foreach (var lineStr in lineResult)
 					{
-						string lineName = (new Extractor(lineResult)).GetBefore("  </td>").GetResult()[0];
-						ShowStrings((new Extractor(lineResult)).GetBefore("  </td>").GetResult());
+						string lineName = (new Extractor(lineResult)).GetBeforeFirst("</td>").GetResult()[0];
+						//ShowStrings((new Extractor(lineResult)).GetBeforeFirst("</td>").GetResult());
+						List<string> dataResult = (new Extractor(lineStr)).GetAfter("<td align=\"center\" nowrap>").GetBeforeFirst("</td>").GetResult();
+						ShowStrings((new Extractor(lineStr)).GetAfter("<td align=\"center\" nowrap>").GetBeforeFirst("</td>").GetResult());
 					}
 				}
 				
