@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StringExtractor
 {
-	class Extractor
+	public class Extractor
 	{
 		List<string> baseStrs;
 

@@ -10,7 +10,8 @@ namespace 提取信息
 	{
 		static void Main(string[] args)
 		{
-
+			提取者 t = new 提取者("input\\03,073.html", "output\\q");
+			t.提取();
 		}
 	}
 }
