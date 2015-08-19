@@ -20,19 +20,34 @@ namespace WebCrawler
 		public void Do()
 		{
 			DateTime dt = DateTime.Now;
-			string fileName;
+			string fileName = "";
 #warning 这里只考虑了中国所处的范围
-			if(_lat < 10)
-				fileName = "0" + _lat;
+			if (_lat < 0)
+				fileName += "-";
 			else
-				fileName = "" + _lat;
+				fileName += "+";
+			if (Math.Abs(_lat) < 10)
+				fileName += "0" + Math.Abs(_lat);
+			else
+				fileName += "" + Math.Abs(_lat);
+
 			fileName += ",";
-			if(_lon < 100)
-				fileName += "0" + _lon;
+
+			if (_lon < 0)
+				fileName += "-";
 			else
-				fileName += "" + _lon;
+				fileName += "+";
+			if(Math.Abs(_lon) < 10)
+				fileName += "00" + Math.Abs(_lon);
+			else
+			{
+				if (Math.Abs(_lon) < 100)
+					fileName += "0" + Math.Abs(_lon);
+				else
+					fileName += "" + Math.Abs(_lon);
+			}
 			fileName += ".html";
-			if((new FileInfo("data\\" + fileName)).Exists)
+			if ((new FileInfo("data\\" + fileName)).Exists)
 			{
 				Console.WriteLine("已存在文件" + fileName);
 				return;

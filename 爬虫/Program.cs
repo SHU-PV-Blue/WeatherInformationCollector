@@ -23,10 +23,16 @@ namespace WebCrawler
 				TimeSpan dt = dt2 - dt1;
 				Console.WriteLine(dt);
 			}*/
-			int latStart = 3;
+			/*int latStart = 3;
 			int latEnd = 54;
 			int lonStart = 73;
-			int lonEnd = 136;
+			int lonEnd = 136;*/
+
+			int latStart = -90;
+			int latEnd = 90;
+			int lonStart = -180;
+			int lonEnd = 180;
+
 			int lat = latStart;
 			int lon = lonStart;
 			Thread[] ths = new Thread[10];
