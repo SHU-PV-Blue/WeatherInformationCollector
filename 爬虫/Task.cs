@@ -21,7 +21,7 @@ namespace WebCrawler
 		{
 			DateTime dt = DateTime.Now;
 			string fileName = "";
-#warning 这里只考虑了中国所处的范围
+
 			if (_lat < 0)
 				fileName += "-";
 			else
@@ -47,15 +47,22 @@ namespace WebCrawler
 					fileName += "" + Math.Abs(_lon);
 			}
 			fileName += ".html";
+
+
 			if ((new FileInfo("data\\" + fileName)).Exists)
 			{
-				Console.WriteLine("已存在文件" + fileName);
+				Console.WriteLine("已存在文件:" + fileName);
 				return;
 			}
+
+			int count = 1;
 			while (!(new Crawler("https://eosweb.larc.nasa.gov/cgi-bin/sse/grid.cgi?&num=182092&lat=" + _lat + "&hgt=100&submit=Submit&veg=17&sitelev=&email=&p=grid_id&step=2&lon=" + _lon, "data\\" + fileName)).Crawl())
-				;
+			{
+				++count;
+				Console.WriteLine("第" + count + "次尝试抓取" + fileName);
+			}
 			TimeSpan ts = DateTime.Now - dt;
-			Console.WriteLine(ts);
+			Console.WriteLine("耗时" + ts + ",尝试" + count + "次");
 		}
 	}
 }

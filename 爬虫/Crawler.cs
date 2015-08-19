@@ -30,17 +30,19 @@ namespace WebCrawler
 			}
 			catch (System.Net.WebException)
 			{
-				Console.WriteLine("!!!!!!!!!!无法连接到网站" + _link);
+				Console.WriteLine("\n!!!连接网站超时:!!!");
+				Console.WriteLine(_link);
 				return false;
 			}
-			System.IO.StreamReader reader = new System.IO.StreamReader(response.GetResponseStream());
+			StreamReader reader = new StreamReader(response.GetResponseStream());
 			string data = reader.ReadToEnd();
 			response.Close();
 
-			FileStream output = new FileStream(_fileName, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-			output.Write(Encoding.Default.GetBytes(data),0,data.Length);
-			output.Close();
-			Console.WriteLine("成功抓取:" + _link);
+			FileStream outFile = new FileStream(_fileName, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+			outFile.Write(Encoding.Default.GetBytes(data),0,data.Length);
+			outFile.Close();
+			Console.WriteLine("\n成功抓取:");
+			Console.WriteLine(_link);
 			return true;
 		}
 	}
