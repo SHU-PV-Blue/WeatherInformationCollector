@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace SHUPV.Database
 {
-	static partial class WeatherDatabase
+	public static partial class WeatherDatabase
 	{
 		static public SqlConnection GetSqlConnection()
 		{
