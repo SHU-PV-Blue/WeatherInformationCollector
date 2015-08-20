@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SHUPV.Database</RootNamespace>
-    <AssemblyName>WeatherDatabase</AssemblyName>
+    <AssemblyName>SHUPV.Database.WeatherDatabase</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

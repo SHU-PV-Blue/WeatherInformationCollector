@@ -43,6 +43,7 @@ namespace WeatherDatabaseTest
 			while (reader.Read())
 			{
 				MessageBox.Show(reader["DataTime"].ToString());
+				MessageBox.Show(reader["Info"].ToString());
 			}
 
 			sqlCnt.Close();
