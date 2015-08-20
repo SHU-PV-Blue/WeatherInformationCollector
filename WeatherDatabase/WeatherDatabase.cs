@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SHUPV.Weather
+namespace SHUPV.Database
 {
-	class Part
+	partial class WeatherDatabase
 	{
 	}
 }
