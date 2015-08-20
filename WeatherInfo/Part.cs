@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SHUPV.Weather
 {
-	class Part
+	public class Part
 	{
 	}
 }
