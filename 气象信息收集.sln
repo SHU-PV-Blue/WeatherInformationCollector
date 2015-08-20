@@ -9,6 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "提取信息", "提取信�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringExtractor", "StringExtractor\StringExtractor.csproj", "{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherInfo", "WeatherInfo\WeatherInfo.csproj", "{99E8343D-74ED-48B7-9B4E-1BC6061D63F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherInfoTest", "WeatherInfoTest\WeatherInfoTest.csproj", "{B21C3589-2EDB-45AD-9B45-0A237A55EC72}"
+	ProjectSection(ProjectDependencies) = postProject
+		{99E8343D-74ED-48B7-9B4E-1BC6061D63F1} = {99E8343D-74ED-48B7-9B4E-1BC6061D63F1}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +34,14 @@ Global
 		{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB7C8C08-D00A-46A9-B8F9-2FFD5025CEE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99E8343D-74ED-48B7-9B4E-1BC6061D63F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99E8343D-74ED-48B7-9B4E-1BC6061D63F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99E8343D-74ED-48B7-9B4E-1BC6061D63F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99E8343D-74ED-48B7-9B4E-1BC6061D63F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B21C3589-2EDB-45AD-9B45-0A237A55EC72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B21C3589-2EDB-45AD-9B45-0A237A55EC72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B21C3589-2EDB-45AD-9B45-0A237A55EC72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B21C3589-2EDB-45AD-9B45-0A237A55EC72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
