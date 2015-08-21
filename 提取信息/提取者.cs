@@ -11,23 +11,23 @@ namespace 提取信息
 {
 	class 提取者
 	{
-		string _inString;
-		StreamWriter _outFile;
+		string _inFileName;
+		string _outFileName;
 
 		public 提取者(string inFileName,string outFileName)
 		{
-			StreamReader reader = new StreamReader(inFileName);
-			_inString = reader.ReadToEnd();
-			_outFile = new StreamWriter(outFileName);
+			_inFileName = inFileName;
+			_outFileName = outFileName;
 		}
 
-		public void 提取()
+		public bool 提取()
 		{
-			Reaper reaper = new Reaper(_inString);
+			StringWriter strWriter = new StringWriter();
+			Reaper reaper = new Reaper((new StreamReader(_inFileName)).ReadToEnd());
 			foreach (Reaper part in reaper.RemainBeforeFirst("<table width=\"100%\" summary=\"table used for formatting\"><tr><td>").ReapByProfix("<hr><big><b><i>"))
 			{
 				string partName = part.RemainBeforeFirst(":</i></b></big>").GetResult()[0];
-				ShowStrings(part.RemainBeforeFirst(":</i></b></big>").GetResult());
+				//ShowStrings(part.RemainBeforeFirst(":</i></b></big>").GetResult());
 				foreach (Reaper table in part.ReapByProfix("<div align=\"center\"><table border=1 summary=\""))
 				{
 					string tableName = table.RemainBeforeFirst("\" width=\"95%\">").GetResult()[0];
@@ -37,20 +37,33 @@ namespace 提取信息
 					{
 						string lineName = line.RemainBeforeFirst("</td>").GetResult()[0];
 
-						_outFile.WriteLine("PART:" + partName);
-						_outFile.WriteLine("TABLE:" + tableName);
-						_outFile.WriteLine("LINE:" + lineName);
-						_outFile.WriteLine("NUM:" + ++lineCount);
-						_outFile.Write("DATA:");
+						strWriter.WriteLine("PART:" + partName);
+						strWriter.WriteLine("TABLE:" + tableName);
+						strWriter.WriteLine("LINE:" + lineName);
+						strWriter.WriteLine("NUM:" + ++lineCount);
+						strWriter.Write("DATA:");
 						foreach (Reaper data in line.ReapByProfix("<td align=\"center\" nowrap>").RemainBeforeFirst("</td>"))
 						{
-							_outFile.Write(data.GetResult()[0] + " ");
+							strWriter.Write(data.GetResult()[0] + " ");
 						}
-						_outFile.WriteLine();
+						strWriter.WriteLine();
 					}
 				}
 			}
+
+			//处理HTML的转义符
+			string result = strWriter.ToString();
+			result = result.Replace("&lt;", "<");
+			result = result.Replace("&gt;", ">");
+			result = result.Replace("&deg;", "°");
+			//处理Average Daily Temperature Range 多出的*
+			result = result.Replace("* ", "");
+
+			StreamWriter _outFile = new StreamWriter(_outFileName);
+			_outFile.Write(result);
 			_outFile.Close();
+			Console.WriteLine("完成:" + _inFileName + " -> " + _outFileName);
+			return true;
 		}
 
 
