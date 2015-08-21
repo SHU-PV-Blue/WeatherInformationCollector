@@ -20,6 +20,10 @@ namespace 提取信息
 			int lonStart = -180;
 			int lonEnd = 180;
 
+			int count = 0;
+			int sum = 181 * 361;
+			DateTime startTime = DateTime.Now;
+			DateTime eachTime = DateTime.Now;
 			int lat = latStart;
 			int lon = lonStart;
 			Thread[] ths = new Thread[10];
@@ -31,12 +35,29 @@ namespace 提取信息
 					{
 						ths[i] = new Thread(new ThreadStart((new Task(lat, lon).Do)));
 						ths[i].Start();
+						++count;
+						if ((DateTime.Now - eachTime) > (new TimeSpan(0,0,5)))
+						{
+							Console.WriteLine();
+							Console.WriteLine("完成" + count + "个,");
+							Console.WriteLine((double)count / sum * 100 + "%");
+							Console.WriteLine("用时" + (DateTime.Now - startTime));
+							double speed = (double)count / (DateTime.Now - startTime).TotalSeconds;
+							TimeSpan ts = new TimeSpan(0, 0, (int)((sum - count) / speed));
+							Console.WriteLine("平均每秒" + speed);
+							Console.WriteLine("预计" + ts + "后完成");
+
+							eachTime = DateTime.Now;
+						}
 						if (lon < lonEnd)
 							++lon;
 						else
 						{
 							if (lat == latEnd)
+							{
+								lat = 200;//to stop while
 								break;
+							}
 							else
 							{
 								++lat;

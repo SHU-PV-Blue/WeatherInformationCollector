@@ -23,21 +23,21 @@ namespace 提取信息
 		public bool 提取()
 		{
 			StringWriter strWriter = new StringWriter();
-			TimeSpan repearTime = new TimeSpan();
+			//TimeSpan repearTime = new TimeSpan();
 			string originString = (new StreamReader(_inFileName)).ReadToEnd();
 
-			DateTime dt = DateTime.Now;
+			//DateTime startTime = DateTime.Now;
 			Reaper reaper = new Reaper(originString);
 
 			string latStr = reaper.RemainAfterFirst("<br>Latitude <b>").RemainBeforeFirst("</b>").GetResult()[0];
 			string lonStr = reaper.RemainAfterFirst("<br>Longitude <b>").RemainBeforeFirst("</b>").GetResult()[0];
 
-			repearTime += DateTime.Now - dt;
+			//repearTime += DateTime.Now - startTime;
 
 			strWriter.Write("LATLON:");
 			strWriter.WriteLine(latStr + " " + lonStr);
 
-			dt = DateTime.Now;
+			//startTime = DateTime.Now;
 
 			foreach (Reaper part in reaper.RemainBeforeFirst("<table width=\"100%\" summary=\"table used for formatting\"><tr><td>").ReapByProfix("<hr><big><b><i>"))
 			{
@@ -52,7 +52,7 @@ namespace 提取信息
 					{
 						string lineName = line.RemainBeforeFirst("</td>").GetResult()[0];
 
-						repearTime += DateTime.Now - dt;
+						//repearTime += DateTime.Now - startTime;
 
 						strWriter.WriteLine("PART:" + partName);
 						strWriter.WriteLine("TABLE:" + tableName);
@@ -60,15 +60,15 @@ namespace 提取信息
 						strWriter.WriteLine("NUM:" + ++lineCount);
 						strWriter.Write("DATA:");
 
-						dt = DateTime.Now;
+						//startTime = DateTime.Now;
 
 						foreach (Reaper data in line.ReapByProfix("<td align=\"center\" nowrap>").RemainBeforeFirst("</td>"))
 						{
-							repearTime += DateTime.Now - dt;
+							//repearTime += DateTime.Now - startTime;
 
 							strWriter.Write(data.GetResult()[0] + " ");
 
-							dt = DateTime.Now;
+							//startTime = DateTime.Now;
 						}
 						strWriter.WriteLine();
 					}
@@ -83,11 +83,19 @@ namespace 提取信息
 			//处理Average Daily Temperature Range 多出的*
 			result = result.Replace("* ", "");
 
-			StreamWriter _outFile = new StreamWriter(_outFileName);
-			_outFile.Write(result);
-			_outFile.Close();
-			Console.WriteLine("完成:" + _inFileName + " -> " + _outFileName);
-			Console.WriteLine("Reaper\n耗时" + repearTime);
+			try
+			{
+				StreamWriter _outFile = new StreamWriter(_outFileName);
+				_outFile.Write(result);
+				_outFile.Close();
+			}
+			catch(Exception ex)
+			{
+				Program.errLog.WriteLine(ex.Message);
+				Program.errLog.Flush();
+			}
+			//Console.WriteLine("完成:" + _inFileName + " -> " + _outFileName);
+			//Console.WriteLine("Reaper\n耗时" + repearTime);
 			return true;
 		}
 

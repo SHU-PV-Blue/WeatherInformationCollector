@@ -52,7 +52,7 @@ namespace 提取信息
 		}
 		public void Do()
 		{
-			DateTime dt = DateTime.Now;
+			//DateTime startTime = DateTime.Now;
 			_outFileName = "output\\" + _lat.ToString() + "," + _lon.ToString() + ".txt";
 			if ((new FileInfo(_outFileName)).Exists)
 			{
@@ -63,8 +63,8 @@ namespace 提取信息
 			}
 			提取者 t = new 提取者(_inFileName, _outFileName);
 			t.提取();
-			TimeSpan ts = DateTime.Now - dt;
-			Console.WriteLine("耗时" + ts);
+			//TimeSpan ts = DateTime.Now - startTime;
+			//Console.WriteLine("耗时" + ts);
 		}
 	}
 }
