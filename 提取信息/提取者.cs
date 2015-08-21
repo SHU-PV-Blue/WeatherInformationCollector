@@ -23,7 +23,20 @@ namespace 提取信息
 		public bool 提取()
 		{
 			StringWriter strWriter = new StringWriter();
+			TimeSpan repearTime = new TimeSpan();
+			DateTime dt = DateTime.Now;
 			Reaper reaper = new Reaper((new StreamReader(_inFileName)).ReadToEnd());
+
+			string latStr = reaper.RemainAfterFirst("<br>Latitude <b>").RemainBeforeFirst("</b>").GetResult()[0];
+			string lonStr = reaper.RemainAfterFirst("<br>Longitude <b>").RemainBeforeFirst("</b>").GetResult()[0];
+
+			repearTime += DateTime.Now - dt;
+
+			strWriter.Write("LATLON:");
+			strWriter.WriteLine(latStr + " " + lonStr);
+
+			dt = DateTime.Now;
+
 			foreach (Reaper part in reaper.RemainBeforeFirst("<table width=\"100%\" summary=\"table used for formatting\"><tr><td>").ReapByProfix("<hr><big><b><i>"))
 			{
 				string partName = part.RemainBeforeFirst(":</i></b></big>").GetResult()[0];
@@ -37,14 +50,23 @@ namespace 提取信息
 					{
 						string lineName = line.RemainBeforeFirst("</td>").GetResult()[0];
 
+						repearTime += DateTime.Now - dt;
+
 						strWriter.WriteLine("PART:" + partName);
 						strWriter.WriteLine("TABLE:" + tableName);
 						strWriter.WriteLine("LINE:" + lineName);
 						strWriter.WriteLine("NUM:" + ++lineCount);
 						strWriter.Write("DATA:");
+
+						dt = DateTime.Now;
+
 						foreach (Reaper data in line.ReapByProfix("<td align=\"center\" nowrap>").RemainBeforeFirst("</td>"))
 						{
+							repearTime += DateTime.Now - dt;
+
 							strWriter.Write(data.GetResult()[0] + " ");
+
+							dt = DateTime.Now;
 						}
 						strWriter.WriteLine();
 					}
@@ -63,6 +85,7 @@ namespace 提取信息
 			_outFile.Write(result);
 			_outFile.Close();
 			Console.WriteLine("完成:" + _inFileName + " -> " + _outFileName);
+			Console.WriteLine("Reaper\n耗时" + repearTime);
 			return true;
 		}
 
