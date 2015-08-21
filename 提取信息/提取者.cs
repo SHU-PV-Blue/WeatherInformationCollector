@@ -24,8 +24,10 @@ namespace 提取信息
 		{
 			StringWriter strWriter = new StringWriter();
 			TimeSpan repearTime = new TimeSpan();
+			string originString = (new StreamReader(_inFileName)).ReadToEnd();
+
 			DateTime dt = DateTime.Now;
-			Reaper reaper = new Reaper((new StreamReader(_inFileName)).ReadToEnd());
+			Reaper reaper = new Reaper(originString);
 
 			string latStr = reaper.RemainAfterFirst("<br>Latitude <b>").RemainBeforeFirst("</b>").GetResult()[0];
 			string lonStr = reaper.RemainAfterFirst("<br>Longitude <b>").RemainBeforeFirst("</b>").GetResult()[0];
