@@ -14,11 +14,10 @@ namespace 提取信息
 		public static StreamWriter errLog;
 		static void Main(string[] args)
 		{
-			(new Task(-90, -180)).Do();
-			(new Task(0, 0)).Do();
+			Work();
 		}
 
-		void Work()
+		static void Work()
 		{
 			errLog = new StreamWriter("errLog.txt");
 			int latStart = -90;

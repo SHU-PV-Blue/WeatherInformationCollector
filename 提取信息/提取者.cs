@@ -62,7 +62,7 @@ namespace 提取信息
 						strWriter.WriteLine("TABLE:" + tableName);
 						strWriter.WriteLine("LINE:" + lineName);
 						strWriter.WriteLine("NUM:" + ++lineCount);
-						//strWriter.Write("DATA:");
+						strWriter.Write("DATA:");
 
 						//startTime = DateTime.Now;
 
@@ -70,11 +70,11 @@ namespace 提取信息
 						{
 							//repearTime += DateTime.Now - startTime;
 
-							//strWriter.Write(data.GetResult()[0] + " ");
+							strWriter.Write(data.GetResult()[0] + " ");
 
 							//startTime = DateTime.Now;
 						}
-						//strWriter.WriteLine();
+						strWriter.WriteLine();
 					}
 				}
 			}
