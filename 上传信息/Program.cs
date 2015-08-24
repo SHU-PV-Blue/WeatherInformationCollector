@@ -10,7 +10,7 @@ namespace 上传信息
 	{
 		static void Main(string[] args)
 		{
-			Uploader uper = new Uploader("data\\-89.5,-179.5.txt");
+			Uploader uper = new Uploader("data\\0.5,0.5.txt");
 			uper.Upload();
 		}
 	}

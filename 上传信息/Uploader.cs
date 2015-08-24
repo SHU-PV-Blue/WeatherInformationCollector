@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Data.SqlClient;
+using System.Data;
 using System.IO;
 
 namespace 上传信息
@@ -20,8 +21,8 @@ namespace 上传信息
 		public Uploader(string inFileName)
 		{
 			_inFileName = inFileName;
-			Console.WriteLine(inFileName.Substring(5, inFileName.IndexOf(",") - 5));
-			Console.WriteLine(inFileName.Substring(inFileName.IndexOf(",") + 1, inFileName.IndexOf(".txt") - inFileName.IndexOf(",") - 1));
+			//Console.WriteLine(inFileName.Substring(5, inFileName.IndexOf(",") - 5));
+			//Console.WriteLine(inFileName.Substring(inFileName.IndexOf(",") + 1, inFileName.IndexOf(".txt") - inFileName.IndexOf(",") - 1));
 			_lat = Convert.ToDouble(inFileName.Substring(5, inFileName.IndexOf(",") - 5));
 			//文件名开头有 \data
 			_lon = Convert.ToDouble(inFileName.Substring(inFileName.IndexOf(",") + 1, inFileName.IndexOf(".txt") - inFileName.IndexOf(",") - 1));
@@ -51,7 +52,7 @@ namespace 上传信息
 				throw new Exception("文件名与文件内记录的经纬度不相符!");
 			}
 
-			int countDataNum = 0;
+			//int countDataNum = 0;
 			_sqlCon.Open();
 
 			while ((tempLine = reader.ReadLine()) != string.Empty && tempLine != null)
@@ -62,7 +63,6 @@ namespace 上传信息
 				int lineNum;
 				double [] data = new double [12];
 
-				//tempLine = reader.ReadLine();
 				if (tempLine.IndexOf("PART:") == -1)
 					throw new Exception("PART: 缺失!");
 				tempLine = tempLine.Replace("PART:", "");
@@ -99,16 +99,16 @@ namespace 上传信息
 						throw new Exception("DATA数据个数异常!");
 					}
 
-					if (tempStrs.Count == 13)
-					{
-						Console.WriteLine("LineName:" + lineName);
-						++countDataNum;
-					}
+					//if (tempStrs.Count == 13)
+					//{
+						//Console.WriteLine("LineName:" + lineName);
+						//++countDataNum;
+					//}
 						
 
 					for (int i = 0; i < 12; ++i)
 					{
-						Console.WriteLine(tempStrs[i] +"  countDataNum:" +  ++countDataNum);
+						//Console.WriteLine(tempStrs[i] +"  countDataNum:" +  ++countDataNum);
 						if (tempStrs[i] == "n/a")
 							data[i] = double.NaN;
 						else
@@ -123,11 +123,59 @@ namespace 上传信息
 					Console.WriteLine(tempStrs.Count);
 					Console.WriteLine("任意键继续");
 					Console.Read();
+					return false;
 				}
 				
 
-			}
+				SqlDataAdapter myDataAdapter = new SqlDataAdapter("select * from Parts where [PartName] = '" + partName + "'", _sqlCon);
+				DataSet myDataSet = new DataSet();
+				myDataAdapter.Fill(myDataSet, "Parts");
+				
+				
 
+				//如下代码很有参考意义
+				//DataTable myTable = myDataSet.Tables["Parts"];
+				//foreach (DataRow myRow in myTable.Rows)
+				//{
+				//	foreach (DataColumn myColumn in myTable.Columns)
+				//	{
+				//		Console.Write(myRow[myColumn] + "     |     ");
+				//	}
+				//	Console.WriteLine();
+				//}
+
+				DataTable myTable = myDataSet.Tables["Parts"];
+				string partID = myTable.Rows[0]["PartID"].ToString();
+
+
+				myDataAdapter = new SqlDataAdapter("select * from Tables where [TableName] = '" + tableName + "' and [PartID] = '" + partID + "'", _sqlCon);
+				myDataSet = new DataSet();
+				myDataAdapter.Fill(myDataSet, "Tables");
+				myTable = myDataSet.Tables["Tables"];
+				string tableID = myTable.Rows[0]["TableID"].ToString();
+
+				SqlCommand command = _sqlCon.CreateCommand();
+				//command.CommandType = CommandType.Text;
+				string commandText1 = "insert into Lines(Lat,Lon,TableID,LineNum,LineName";
+				string[] month = new string[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+				string commandText2	= "values ('" + _lat + "','" + _lon + "','" + tableID + "','" + lineNum + "','" + lineName + "'";
+				for (int i = 0; i < 12; ++i)
+				{
+					if (!Double.IsNaN(data[i]))
+					{
+						commandText1 += ",[" + month[i] + "]";
+						commandText2 += ",'" + data[i] + "'";
+					}
+				}
+				commandText1 += ")";
+				commandText2 += ")";
+				command.CommandText = commandText1 + commandText2;
+				Console.WriteLine(command.CommandText);
+				command.ExecuteNonQuery();
+
+
+
+			}
 
 			
 			
