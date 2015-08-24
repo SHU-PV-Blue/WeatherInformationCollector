@@ -14,6 +14,12 @@ namespace 提取信息
 		public static StreamWriter errLog;
 		static void Main(string[] args)
 		{
+			(new Task(-90, -180)).Do();
+			(new Task(0, 0)).Do();
+		}
+
+		void Work()
+		{
 			errLog = new StreamWriter("errLog.txt");
 			int latStart = -90;
 			int latEnd = 90;
@@ -36,7 +42,7 @@ namespace 提取信息
 						ths[i] = new Thread(new ThreadStart((new Task(lat, lon).Do)));
 						ths[i].Start();
 						++count;
-						if ((DateTime.Now - eachTime) > (new TimeSpan(0,0,5)))
+						if ((DateTime.Now - eachTime) > (new TimeSpan(0, 0, 5)))
 						{
 							Console.WriteLine();
 							Console.WriteLine("完成" + count + "个,");

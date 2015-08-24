@@ -50,8 +50,8 @@ namespace 上传信息
 				Console.WriteLine("_lon:" + _lon);
 				throw new Exception("文件名与文件内记录的经纬度不相符!");
 			}
-				
 
+			int countDataNum = 0;
 			_sqlCon.Open();
 
 			while ((tempLine = reader.ReadLine()) != string.Empty && tempLine != null)
@@ -99,9 +99,16 @@ namespace 上传信息
 						throw new Exception("DATA数据个数异常!");
 					}
 
+					if (tempStrs.Count == 13)
+					{
+						Console.WriteLine("LineName:" + lineName);
+						++countDataNum;
+					}
+						
+
 					for (int i = 0; i < 12; ++i)
 					{
-						Console.WriteLine(tempStrs[i]);
+						Console.WriteLine(tempStrs[i] +"  countDataNum:" +  ++countDataNum);
 						if (tempStrs[i] == "n/a")
 							data[i] = double.NaN;
 						else

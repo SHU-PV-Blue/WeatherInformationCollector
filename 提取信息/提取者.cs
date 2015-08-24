@@ -26,6 +26,10 @@ namespace 提取信息
 			//TimeSpan repearTime = new TimeSpan();
 			string originString = (new StreamReader(_inFileName)).ReadToEnd();
 
+			//处理重大漏洞:HTML代码中,部分行名是包含在</tr>\n<tr><td align=\"center\">中,而大多数是包含在</tr>\n<tr><td>中
+			originString = originString.Replace("</tr>\n<tr><td align=\"center\">", "</tr>\n<tr><td>");
+
+
 			//DateTime startTime = DateTime.Now;
 			Reaper reaper = new Reaper(originString);
 
@@ -58,7 +62,7 @@ namespace 提取信息
 						strWriter.WriteLine("TABLE:" + tableName);
 						strWriter.WriteLine("LINE:" + lineName);
 						strWriter.WriteLine("NUM:" + ++lineCount);
-						strWriter.Write("DATA:");
+						//strWriter.Write("DATA:");
 
 						//startTime = DateTime.Now;
 
@@ -66,11 +70,11 @@ namespace 提取信息
 						{
 							//repearTime += DateTime.Now - startTime;
 
-							strWriter.Write(data.GetResult()[0] + " ");
+							//strWriter.Write(data.GetResult()[0] + " ");
 
 							//startTime = DateTime.Now;
 						}
-						strWriter.WriteLine();
+						//strWriter.WriteLine();
 					}
 				}
 			}
