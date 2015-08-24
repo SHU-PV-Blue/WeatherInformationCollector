@@ -10,8 +10,13 @@ namespace 上传信息
 	{
 		static void Main(string[] args)
 		{
-			Uploader uper = new Uploader("data\\0.5,0.5.txt");
-			uper.Upload();
+			for(double lat = 0.5; lat < 11; ++lat)
+				for(double lon = 0.5; lon < 11; ++lon)
+				{
+					Uploader uper = new Uploader("data\\" + lat + "," + lon + ".txt");
+					uper.Upload();
+				}
+			
 		}
 	}
 }
