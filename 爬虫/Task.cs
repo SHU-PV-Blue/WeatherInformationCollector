@@ -10,57 +10,51 @@ namespace WebCrawler
 {
 	class Task
 	{
-		int _lat;
-		int _lon;
-		public Task(int lat,int lon)
+		//需要抓取的NASA数据的经纬度
+		double _lat;
+		double _lon;
+
+		//构造函数
+		public Task(double lat, double lon)
 		{
 			_lat = lat;
 			_lon = lon;
 		}
+
+		//执行函数
 		public void Do()
 		{
+			//记录一下任务开始时的时间
 			DateTime dt = DateTime.Now;
-			string fileName = "";
+			//确定文件名
+			string fileName = _lat + "," + _lon + ".html";
 
-			if (_lat < 0)
-				fileName += "-";
-			else
-				fileName += "+";
-			if (Math.Abs(_lat) < 10)
-				fileName += "0" + Math.Abs(_lat);
-			else
-				fileName += "" + Math.Abs(_lat);
+			//修正了之前的错误,程序自己创建data文件夹,如果已存在则忽略
+			DirectoryInfo dir = new DirectoryInfo("data\\");
+			dir.Create();
 
-			fileName += ",";
-
-			if (_lon < 0)
-				fileName += "-";
-			else
-				fileName += "+";
-			if(Math.Abs(_lon) < 10)
-				fileName += "00" + Math.Abs(_lon);
-			else
-			{
-				if (Math.Abs(_lon) < 100)
-					fileName += "0" + Math.Abs(_lon);
-				else
-					fileName += "" + Math.Abs(_lon);
-			}
-			fileName += ".html";
-
-
+			//如果已经存在这个文件了,说明抓过了,任务取消
 			if ((new FileInfo("data\\" + fileName)).Exists)
 			{
 				Console.WriteLine("已存在文件:" + fileName);
 				return;
 			}
 
+			//记录一下为抓这个数据尝试了几次
 			int count = 1;
-			while (!(new Crawler("https://eosweb.larc.nasa.gov/cgi-bin/sse/grid.cgi?&num=182092&lat=" + _lat + "&hgt=100&submit=Submit&veg=17&sitelev=&email=&p=grid_id&step=2&lon=" + _lon, "data\\" + fileName)).Crawl())
+			//确认网址链接,这里没什么门道,浏览NASA网页时看浏览器地址,找规律
+			string link = "https://eosweb.larc.nasa.gov/cgi-bin/sse/grid.cgi?&num=182092&lat=" + _lat + "&hgt=100&submit=Submit&veg=17&sitelev=&email=&p=grid_id&step=2&lon=" + _lon;
+			//新建抓取者实例
+			Crawler crawler = new Crawler(link, "data\\" + fileName);
+
+			//不停地循环尝试抓取,直到成功
+			while (!(crawler.Crawl()))
 			{
 				++count;
 				Console.WriteLine("第" + count + "次尝试抓取" + fileName);
 			}
+
+			//计算总耗时并显示
 			TimeSpan ts = DateTime.Now - dt;
 			Console.WriteLine("耗时" + ts + ",尝试" + count + "次");
 		}
