@@ -21,8 +21,8 @@ namespace 上传信息
 		public Uploader(string inFileName)
 		{
 			_inFileName = inFileName;
-			//Console.WriteLine(inFileName.Substring(5, inFileName.IndexOf(",") - 5));
-			//Console.WriteLine(inFileName.Substring(inFileName.IndexOf(",") + 1, inFileName.IndexOf(".txt") - inFileName.IndexOf(",") - 1));
+			//Console.WriteLine(_inFileName.Substring(5, _inFileName.IndexOf(",") - 5));
+			//Console.WriteLine(_inFileName.Substring(_inFileName.IndexOf(",") + 1, _inFileName.IndexOf(".txt") - _inFileName.IndexOf(",") - 1));
 			_lat = Convert.ToDouble(inFileName.Substring(5, inFileName.IndexOf(",") - 5));
 			//文件名开头有 \data
 			_lon = Convert.ToDouble(inFileName.Substring(inFileName.IndexOf(",") + 1, inFileName.IndexOf(".txt") - inFileName.IndexOf(",") - 1));
@@ -170,7 +170,7 @@ namespace 上传信息
 				commandText1 += ")";
 				commandText2 += ")";
 				command.CommandText = commandText1 + commandText2;
-				Console.WriteLine(command.CommandText);
+				//Console.WriteLine(command.CommandText);
 				command.ExecuteNonQuery();
 
 
